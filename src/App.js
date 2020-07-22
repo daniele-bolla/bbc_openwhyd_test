@@ -1,13 +1,24 @@
 import React from 'react';
 import Player from './components/Player';
-import './App.css';
+import { Global, css } from '@emotion/core';
+import normalize from 'normalize.css';
+import { ThemeProvider } from 'emotion-theming';
 
-function App() {
+import theme from './theme';
+const App = () => {
   return (
-    <div className="App">
+    <ThemeProvider theme={theme}>
+      <Global
+        styles={css`
+          ${normalize}
+          body {
+            background-color: ${theme.colors.bg};
+          }
+        `}
+      />
       <Player />
-    </div>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
