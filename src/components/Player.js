@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import List from './List';
+import TrackList from './TrackList';
+import BaseSelect from './BaseSelect';
 import BaseButton from './BaseButton';
-
+import Widget from './Widget';
+import Modal from 'react-modal';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import axios from 'axios';
 
 const genreTags = [
+  'all',
   'electro',
   'hip hop',
   'indie',
@@ -22,46 +27,54 @@ const genreTags = [
   'latin',
   'world',
 ];
-const formatCases = {
-  // yt: () => youtubePlayer(),
-  // sc: () => youtubePlayer(),
-  // bc: () => youtubePlayer(),
-  // vi: () => youtubePlayer(),
-  // vi: () => youtubePlayer(),
-  // dz: () => youtubePlayer(),
-  // fi: () => youtubePlayer(),
+const modalStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    zIndex: 2,
+    transform: 'translate(-50%, -50%)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
 };
-const switchcase = (cases, pred, ...args) => {
-  const withOrCasesKey = Object.keys(cases).find((key) => key.includes(pred));
-  return withOrCasesKey ? cases[withOrCasesKey](...args) : null;
-};
-function getPlatoform(str) {
-  const regexp = /yt|sc|bc|vi|dz|dm|fi/g;
-  const [[format]] = [...str.matchAll(regexp)];
-  return format;
-}
-function getFormat(url) {
-  return url.substring(1, 3);
-}
-function Widget({ track }) {
-  if (!track) return <p>No tracks, sorry</p>;
-  const { eId } = track;
-  const urlParams = eId.split('/');
-  //const format = urlParams[0];
-  const url = urlParams[2];
-  const link = `https://www.youtube.com/embed/${url}?autoplay=1`;
-  console.log(link);
-  return (
-    <iframe
-      width="600px"
-      height="400px"
-      src={link}
-      frameBorder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    ></iframe>
-  );
-}
+const stickySearchBarStyle = (theme) => css`
+  position: sticky;
+  top: 0px;
+  padding: 1rem;
+  background: ${theme.colors.white};
+  border: solid 0.2rem ${theme.colors.grey};
+  display: flex;
+  align-items: center;
+`;
+const labelStyle = css`
+  flex: 1;
+  display: block;
+  font-size: 1.2rem;
+  font-weight: bold;
+`;
+const selectStyle = css`
+  flex: 1.5;
+`;
+
+const loaderStyle = css`
+  z-index: 999;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+Modal.setAppElement('#root');
+
 function Player() {
   const [appState, setAppState] = useState({
     loading: false,
@@ -70,26 +83,28 @@ function Player() {
 
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState(null);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
 
-  useEffect(async () => {
-    await fetchTracks();
+  function closeModal() {
+    setIsOpen(false);
+  }
+  useEffect(() => {
+    fetchTracks();
   }, [setAppState]);
 
   const fetchTracks = async (genre) => {
     setAppState({ loading: true });
-    const config = {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': '*',
-      },
-    };
+
     const apiUrl = genre
-      ? `https://cors-anywhere.herokuapp.com/https://openwhyd.org/hot/${genre}?format=json`
-      : `https://cors-anywhere.herokuapp.com/https://openwhyd.org/hot/?format=json`;
+      ? `/hot/${encodeURI(genre)}?format=json`
+      : `/hot/?format=json`;
     try {
       const {
         data: { tracks },
-      } = await axios.get(apiUrl, config);
+      } = await axios.get(apiUrl);
       setAppState({
         loading: false,
         tracks,
@@ -101,29 +116,53 @@ function Player() {
 
   const playThis = (e, track) => {
     e.preventDefault();
+    openModal();
     setSelectedTrack(track);
   };
 
   const selectGenre = async (e, genre) => {
     e.preventDefault();
-    await fetchTracks(genre);
-    setSelectedGenre(genre);
+    setSelectedGenre(e.target.value);
+    await fetchTracks(e.target.value);
   };
 
   return (
-    <div>
-      <h1>Player</h1>
-      {genreTags.map((genre, index) => {
-        return (
-          <BaseButton key={index} onClick={(e) => selectGenre(e, genre)}>
-            {genre}
-          </BaseButton>
-        );
-      })}
-      <Widget track={selectedTrack}></Widget>
+    <article>
+      {appState.loading ? (
+        <div role="alert" css={loaderStyle}>
+          <h3>Loading {selectedGenre} tracks...</h3>
+        </div>
+      ) : null}
 
-      <List tracks={appState.tracks} playThis={playThis} />
-    </div>
+      <navbar css={stickySearchBarStyle}>
+        <label css={labelStyle} htmlFor="searchByGenre">
+          Select a genre
+        </label>
+        <BaseSelect
+          css={selectStyle}
+          id="searchByGenre"
+          placeholder="Select a genre"
+          title="Select a Genre"
+          onChange={(e) => selectGenre(e)}
+          options={genreTags}
+        />
+      </navbar>
+      <header>
+        <h2>Top 20 {selectedGenre} tracks</h2>
+      </header>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={modalStyles}
+        contentLabel="Example Modal"
+      >
+        <Widget track={selectedTrack}></Widget>
+        <BaseButton full="true" onClick={() => closeModal()}>
+          close player
+        </BaseButton>
+      </Modal>
+      <TrackList tracks={appState.tracks} playThis={playThis} />
+    </article>
   );
 }
 

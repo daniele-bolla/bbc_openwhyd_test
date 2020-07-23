@@ -1,9 +1,9 @@
 const theme = {
   colors: {
-    bg: '#fefefe',
-    success: 'green',
-    error: 'red',
-    white: 'white',
+    primary: 'green',
+    grey: '#c3cfd9',
+    balck: '#222',
+    white: '#fefefe',
   },
 };
 

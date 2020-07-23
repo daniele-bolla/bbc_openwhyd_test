@@ -1,4 +1,5 @@
 import React from 'react';
+import PageContainer from './components/PageContainer';
 import Player from './components/Player';
 import { Global, css } from '@emotion/core';
 import normalize from 'normalize.css';
@@ -12,11 +13,17 @@ const App = () => {
         styles={css`
           ${normalize}
           body {
-            background-color: ${theme.colors.bg};
+            background-color: ${theme.colors.white};
+            color: ${theme.colors.black};
           }
         `}
       />
-      <Player />
+      <PageContainer>
+        <header>
+          <h1>Hot Tracks Player</h1>
+        </header>
+        <Player />
+      </PageContainer>
     </ThemeProvider>
   );
 };
