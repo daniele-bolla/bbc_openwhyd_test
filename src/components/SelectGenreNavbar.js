@@ -1,8 +1,13 @@
 import React from 'react';
 import BaseSelect from './BaseSelect';
 import PropTypes from 'prop-types';
+import Stickyfill from 'stickyfilljs';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+
+const navbarEl = document.querySelectorAll('.sticky');
+Stickyfill.add(navbarEl);
+
 const genreTags = [
   'all',
   'electro',
@@ -31,6 +36,11 @@ const stickySearchBarStyle = (theme) => css`
   border: solid 0.2rem ${theme.colors.grey};
   display: flex;
   align-items: center;
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
 `;
 const labelStyle = css`
   flex: 1;
@@ -44,7 +54,7 @@ const selectStyle = css`
 
 export default function SelectGenreNavbar({ selectGenre }) {
   return (
-    <navbar css={stickySearchBarStyle}>
+    <nav className="sticky" css={stickySearchBarStyle}>
       <label css={labelStyle} htmlFor="searchByGenre">
         Select a genre
       </label>
@@ -56,7 +66,7 @@ export default function SelectGenreNavbar({ selectGenre }) {
         onChange={(e) => selectGenre(e)}
         options={genreTags}
       />
-    </navbar>
+    </nav>
   );
 }
 SelectGenreNavbar.propTypes = {
