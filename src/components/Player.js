@@ -43,6 +43,7 @@ const modalStyles = {
   },
 };
 const stickySearchBarStyle = (theme) => css`
+  position: fixed;
   position: sticky;
   top: 0px;
   padding: 1rem;
