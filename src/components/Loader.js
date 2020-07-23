@@ -1,17 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 
-function WithListLoading(Component) {
-  return function WihLoadingComponent({ isLoading, ...props }) {
-    if (!isLoading) return <Component {...props} />;
-    return (
-      <p style={{ textAlign: 'center', fontSize: '30px' }}>
-        Hold on, fetching data may take some time :)
-      </p>
-    );
-  };
+const loaderStyle = css`
+  z-index: 999;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export default function Loader({ isLoading, message }) {
+  if (!isLoading) return null;
+  return (
+    <div role="alert" css={loaderStyle}>
+      <h3>{message}</h3>
+    </div>
+  );
 }
-WithListLoading.propTypes = {
-  isLoading: PropTypes.boolean.isRequired,
+Loader.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
 };
-export default WithListLoading;
