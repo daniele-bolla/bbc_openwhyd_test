@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 
+const iframeStyle = css`
+  width: 80vw;
+  height: calc((60vw / 16) * 9);
+`;
 const formatCases = {
   yt: (url) => formatYoutubeLink(url),
   sc: (url) => formatSoundCloudLink(url),
@@ -42,8 +48,7 @@ export default function Widget({ track }) {
   return (
     <iframe
       title={name}
-      width="600px"
-      height="400px"
+      css={iframeStyle}
       src={link}
       frameBorder="0"
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
