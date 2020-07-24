@@ -20,7 +20,7 @@ describe('The SelectGenreNavbar component', () => {
     expect(getByLabelText('Select a genre')).toBeTruthy();
   });
 
-  it('updates the value and use the parent function', () => {
+  it('updates the select value and use the parent function', () => {
     const { getByTestId } = wrapper();
     const select = getByTestId('select');
     const value = 'indie';

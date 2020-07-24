@@ -15,15 +15,14 @@ export default function TrackList(props) {
   const { tracks, playThis } = props;
   if (!tracks || tracks.length === 0) return <p>No tracks, sorry</p>;
   return (
-    <div css={trackListStyle}>
+    <div data-testid="tracklist" css={trackListStyle}>
       {tracks.map((track) => {
         return (
-          <TrackCard
-            key={track._id}
-            track={track}
-            onClick={(e) => playThis(e, track)}
-          >
-            <BaseButton full="true" onClick={(e) => playThis(e, track)}>
+          <TrackCard key={track._id} track={track}>
+            <BaseButton
+              data-testid={`trackbutton-${track._id}`}
+              onClick={(e) => playThis(e, track)}
+            >
               Play this
             </BaseButton>
           </TrackCard>
