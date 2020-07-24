@@ -55,10 +55,15 @@ const selectStyle = css`
 export default function SelectGenreNavbar({ selectGenre }) {
   return (
     <nav className="sticky" css={stickySearchBarStyle}>
-      <label css={labelStyle} htmlFor="searchByGenre">
+      <label
+        data-testid="label-select"
+        css={labelStyle}
+        htmlFor="searchByGenre"
+      >
         Select a genre
       </label>
       <BaseSelect
+        data-testid="select"
         css={selectStyle}
         id="searchByGenre"
         placeholder="Select a genre"

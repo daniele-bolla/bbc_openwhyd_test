@@ -18,7 +18,7 @@ const loaderStyle = css`
 export default function Loader({ isLoading, message }) {
   if (!isLoading) return null;
   return (
-    <div role="alert" css={loaderStyle}>
+    <div data-testid="overlay" role="alert" css={loaderStyle}>
       <h3>{message}</h3>
     </div>
   );
