@@ -34,12 +34,10 @@ const formatYoutubeLink = (urlParams) => {
 
 const formatSoundCloudLink = (urlParams) => {
   const trackUrl = urlParams[7];
-  return `https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/${trackUrl}&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`;
+  return `https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/${trackUrl}&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`;
 };
 
 export default function Widget({ track }) {
-  if (!track) return <p>Track not found or selected</p>;
-
   const { eId, name } = track;
   const urlParams = eId.split('/');
   const format = urlParams[1];
@@ -48,6 +46,7 @@ export default function Widget({ track }) {
   return (
     <iframe
       title={name}
+      data-testid="iframe"
       css={iframeStyle}
       src={link}
       frameBorder="0"
