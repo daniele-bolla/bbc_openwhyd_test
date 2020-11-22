@@ -49,8 +49,8 @@ function Player() {
     setTracksState({ loading: true });
 
     const apiUrl = genre
-      ? `/hot/${encodeURI(genre)}?format=json`
-      : `/hot/?format=json`;
+      ? `/react_openwhyd_demo/hot/${encodeURI(genre)}?format=json`
+      : `/react_openwhyd_demo/hot/?format=json`;
     try {
       const {
         data: { tracks },
