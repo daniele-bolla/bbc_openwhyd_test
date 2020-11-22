@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/react_openwhyd_demo/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/react_openwhyd_demo/static/js/main.246f2629.chunk.js",
+    "main.js.map": "/react_openwhyd_demo/static/js/main.246f2629.chunk.js.map",
+    "runtime-main.js": "/react_openwhyd_demo/static/js/runtime-main.05d7f7fe.js",
+    "runtime-main.js.map": "/react_openwhyd_demo/static/js/runtime-main.05d7f7fe.js.map",
+    "static/css/2.764ccc25.chunk.css": "/react_openwhyd_demo/static/css/2.764ccc25.chunk.css",
+    "static/js/2.794f11ee.chunk.js": "/react_openwhyd_demo/static/js/2.794f11ee.chunk.js",
+    "static/js/2.794f11ee.chunk.js.map": "/react_openwhyd_demo/static/js/2.794f11ee.chunk.js.map",
+    "index.html": "/react_openwhyd_demo/index.html",
+    "precache-manifest.c21b07fc6d3b79083dccb5fbe8b11887.js": "/react_openwhyd_demo/precache-manifest.c21b07fc6d3b79083dccb5fbe8b11887.js",
+    "service-worker.js": "/react_openwhyd_demo/service-worker.js",
+    "static/css/2.764ccc25.chunk.css.map": "/react_openwhyd_demo/static/css/2.764ccc25.chunk.css.map",
+    "static/css/main.5ecd60fb.chunk.css.map": "/react_openwhyd_demo/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.794f11ee.chunk.js.LICENSE.txt": "/react_openwhyd_demo/static/js/2.794f11ee.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.05d7f7fe.js",
+    "static/css/2.764ccc25.chunk.css",
+    "static/js/2.794f11ee.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.246f2629.chunk.js"
+  ]
+}
