@@ -2,6 +2,7 @@
   "name": "bbc_openwhyd_test",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://daniele-bolla.github.io/react_openwhyd_demo",
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@testing-library/jest-dom": "^4.2.4",
